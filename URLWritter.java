@@ -2,7 +2,7 @@
 //                Filename: URLWritter.java ~ November 21, 2019
 // =============================================================================
 // Jaime Bohorquez
-// Created using Atom + Terminal on Mac OS
+// Created using Atom + iTerm2 on Mac OS
 // This program extracts data from websites and writes it to a file.
 // =============================================================================
 

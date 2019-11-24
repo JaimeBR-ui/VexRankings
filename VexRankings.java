@@ -2,7 +2,7 @@
 //                Filename: VexRankings.java ~ November 21, 2019
 // =============================================================================
 // Jaime Bohorquez
-// Created using Atom + Terminal on Mac OS
+// Created using Atom + iTerm2 on Mac OS
 // This program will get the top 50 top scores for the Vex Robotics Competition
 // skills challenge. This program will only work for the VexU division for now.
 // =============================================================================
@@ -15,6 +15,7 @@ public class VexRankings
 {
      private static final String gradeLevel = "College";
      private static final String season = "Tower Takeover";
+     private static final int numberOfRankings = 15;
 
      private VexRankings() {}
 
@@ -26,6 +27,11 @@ public class VexRankings
           System.out.println("     Writing data to files...");
           URLWritter.writeToFile(vexdbURL, "./data/vexdb_rankings.json");
           URLWritter.writeToFile(robotEventsURL, "./data/robot_events_rankings.json");
+
+          // read json files // use linked list for sake of practicing
+
+          Set<Team> teams = new TreeSet<>();
+
           System.out.println("     [Complete]");
      }
 
