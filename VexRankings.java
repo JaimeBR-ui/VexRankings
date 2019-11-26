@@ -17,6 +17,9 @@ public class VexRankings
      private static final String season = "Tower Takeover";
      private static final int numberOfRankings = 15;
 
+     private static String vexDBFile = "./data/vexdb_rankings.json";
+     private static String robotEventsFile = "./data/robot_events_rankings.json";
+
      private VexRankings() {}
 
      public static void main(String [] args)
@@ -25,12 +28,36 @@ public class VexRankings
           String robotEventsURL = getRobotEventsURL(gradeLevel, season);
 
           System.out.println("     Writing data to files...");
-          URLWritter.writeToFile(vexdbURL, "./data/vexdb_rankings.json");
-          URLWritter.writeToFile(robotEventsURL, "./data/robot_events_rankings.json");
+          URLWritter.writeToFile(vexdbURL, vexDBFile);
+          URLWritter.writeToFile(robotEventsURL, robotEventsFile);
 
-          // read json files // use linked list for sake of practicing
+          // Read json files and return head of linked list.
+          Team robotEvents = JsonReader.getJsonContents(robotEventsFile);
+          Team vexDB = JsonReader.getJsonContents(robotEventsFile);
 
+          System.out.println("     Readng files...");
           Set<Team> teams = new TreeSet<>();
+
+          while (robotEvents != null)
+          {
+               teams.add(robotEvents);
+               robotEvents = robotEvents.next;
+          }
+
+          while (vexDB != null)
+          {
+               teams.add(vexDB);
+               vexDB = vexDB.next;
+          }
+
+          int i = 1;
+          for (Team t : teams)
+          {
+               t.setRank(i);
+               System.out.println(t.rank() + ". " + t.plateNumber()
+                                                            + " " + t.score());
+               i++;
+          }
 
           System.out.println("     [Complete]");
      }
@@ -55,8 +82,13 @@ public class VexRankings
      public static String getVexdbURL(String gradeLevel, String season)
      {
           String url = "https://api.vexdb.io/v1/get_skills?season=";
-          url += (season.split(" "))[0] + "%20";
-          url += (season.split(" "))[1];
+
+          String [] subNames = season.split(" ");
+
+          int length = subNames.length - 1;
+
+          for (String e : subNames)
+               url += e + ((e.equals(subNames[length])) ? "" : "%20");
 
           if (gradeLevel.equals("College"))
                url += "&program=" + "VEXU&type=2";

@@ -1,0 +1,3 @@
+Todo:
+Create a method in FileReader that reads the team data in the files and returns
+the head of a linked list of the data.

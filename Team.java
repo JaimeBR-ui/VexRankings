@@ -24,19 +24,24 @@ class Team implements Comparable
      }
 
      // Getter method(s).
-     public String getName()
+     public String name()
      {
           return this.name;
      }
 
-     public int getScore()
+     public int score()
      {
           return this.score;
      }
-
-     public int getRank()
+//     @Deprecated
+     public int rank()
      {
           return this.rank;
+     }
+
+     public String plateNumber()
+     {
+          return this.plateNumber;
      }
 
      // Setter method(s).
@@ -51,10 +56,13 @@ class Team implements Comparable
      {
           if (!(o instanceof Team))
                return 0;
-          if (((Team) o).getName().equals(this.name))
+
+          else if (((Team) o).name().equals(this.name()))
                return 0;
-          if (((Team)o).score > this.score)
+
+          else if (((Team)o).score > this.score)
                return 1;
+
           return -1;
      }
 }

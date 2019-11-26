@@ -16,6 +16,11 @@ run:
 all:
 	@make clean
 	@make
+cmr:
+	@make clean
+	@make
+	@make run
 
 # Some things:
-# @makes the cmd not print the output of the command
+# @ makes the file not print the command running into the cmd
+# -$Drm -rf makes the output of the command not print to the cmd
