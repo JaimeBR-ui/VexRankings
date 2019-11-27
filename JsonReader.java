@@ -18,45 +18,49 @@ import org.json.simple.parser.ParseException;
 
 class JsonReader
 {
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
     protected static Team getJsonContents(String fileName)
     {
-        JSONParser jsonParser = new JSONParser();
+         // Creates a linked list of Team objects and returns the head.
 
-        try (FileReader reader = new FileReader(fileName))
-        {
-            // Read JSON file
-            Object obj = jsonParser.parse(reader);
+          JSONParser jsonParser = new JSONParser();
 
-            JSONArray employeeList = (JSONArray) obj;
-            System.out.println(employeeList);
+          try
+          {
+               FileReader reader = new FileReader(fileName);
 
-          //  employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
+               // Read JSON file
+               Object obj = jsonParser.parse(reader);
 
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
+               JSONArray employeeList = (JSONArray) obj;
+               System.out.println(employeeList);
 
-        return null;
+               //  employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
+
+          }
+          catch (FileNotFoundException e)
+          {
+               e.printStackTrace();
+          }
+          catch (IOException e)
+          {
+               e.printStackTrace();
+          }
+          catch (ParseException e)
+          {
+               e.printStackTrace();
+          }
+
+          return null;
     }
 
     private static void parseEmployeeObject(JSONObject employee)
     {
         //Get employee object within list
-        JSONObject employeeObject = (JSONObject) employee.get("employee");
+        JSONObject employeeObject = (JSONObject) employee.get("team");
 
         //Get employee first name
-        String firstName = (String) employeeObject.get("firstName");
+        String firstName= (String) employeeObject.get("firstName");
         System.out.println(firstName);
 
         //Get employee last name
