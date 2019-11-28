@@ -57,7 +57,7 @@ class Team implements Comparable
           if (!(o instanceof Team))
                return 0;
 
-          else if (((Team) o).name().equals(this.name()))
+          else if (((Team) o).plateNumber().equals(this.plateNumber()))
                return 0;
 
           else if (((Team)o).score > this.score)

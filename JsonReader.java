@@ -10,6 +10,7 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,57 +19,102 @@ import org.json.simple.parser.ParseException;
 
 class JsonReader
 {
-    //@SuppressWarnings("unchecked")
-    protected static Team getJsonContents(String fileName)
-    {
-         // Creates a linked list of Team objects and returns the head.
-
-          JSONParser jsonParser = new JSONParser();
-
+     protected static Team getRobotEventsScores(String fileName)
+     {
+          JSONParser parser = new JSONParser();
+          Reader reader;
+          JSONArray array = null;
           try
           {
-               FileReader reader = new FileReader(fileName);
-
-               // Read JSON file
-               Object obj = jsonParser.parse(reader);
-
-               JSONArray employeeList = (JSONArray) obj;
-               System.out.println(employeeList);
-
-               //  employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
-
+               // Lets get the array within the json file.
+               reader = new FileReader(fileName);
+               array = (JSONArray) parser.parse(reader);
           }
-          catch (FileNotFoundException e)
-          {
-               e.printStackTrace();
-          }
-          catch (IOException e)
-          {
-               e.printStackTrace();
-          }
-          catch (ParseException e)
+          catch (Exception e)
           {
                e.printStackTrace();
           }
 
-          return null;
-    }
+          // lets get the team array
+          Team head = null;
+          Team current = null;
 
-    private static void parseEmployeeObject(JSONObject employee)
-    {
-        //Get employee object within list
-        JSONObject employeeObject = (JSONObject) employee.get("team");
+          for (int i = 0; i < array.size(); i++)
+          {
+               // Gets the team from the array.
+               JSONObject jsonTeam = (JSONObject) array.get(i);
 
-        //Get employee first name
-        String firstName= (String) employeeObject.get("firstName");
-        System.out.println(firstName);
+               JSONObject teamData = (JSONObject) jsonTeam.get("team");
 
-        //Get employee last name
-        String lastName = (String) employeeObject.get("lastName");
-        System.out.println(lastName);
+               String teamName = (String) teamData.get("teamName");
+               String plateNumber = (String) teamData.get("team");
 
-        //Get employee website name
-        String website = (String) employeeObject.get("website");
-        System.out.println(website);
-    }
+               JSONObject scores = (JSONObject) jsonTeam.get("scores");
+               long score = (long) scores.get("score");
+
+               Team team = new Team(teamName, plateNumber, (int) score);
+
+               if (head == null)
+               {
+                    current = team;
+                    head = current;
+               }
+               else
+               {
+                    current.next = team;
+                    current = current.next;
+               }
+
+          }
+          return head;
+     }
+
+     protected static Team getVexDBScores(String fileName)
+     {
+          JSONParser parser = new JSONParser();
+          Reader reader;
+          JSONArray array = null;
+          int size = 0;
+          try
+          {
+               // Lets get the array within the json file.
+               reader = new FileReader(fileName);
+               JSONObject container = (JSONObject) parser.parse(reader);
+               long length = (long) container.get("size");
+               size = (int) length;
+               array = (JSONArray) container.get("result");
+          }
+          catch (Exception e)
+          {
+               e.printStackTrace();
+          }
+
+          // lets get the team array
+          Team head = null, current = null;
+
+          for (int i = 0; i < size; i++)
+          {
+               // Gets the team from the array.
+               JSONObject jsonTeam = (JSONObject) array.get(i);
+
+               String teamName = "(Name Not found)";
+               String plateNumber = (String) jsonTeam.get("team");
+
+               long score = (long) jsonTeam.get("score");
+
+               Team team = new Team(teamName, plateNumber, (int) score);
+
+               if (head == null)
+               {
+                    current = team;
+                    head = current;
+               }
+               else
+               {
+                    current.next = team;
+                    current = current.next;
+               }
+          }
+          return head;
+     }
 }

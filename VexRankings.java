@@ -32,10 +32,10 @@ public class VexRankings
           URLWritter.writeToFile(robotEventsURL, robotEventsFile);
 
           // Read json files and return head of linked list.
-          Team robotEvents = JsonReader.getJsonContents(robotEventsFile);
-          Team vexDB = JsonReader.getJsonContents(robotEventsFile);
+          Team robotEvents = JsonReader.getRobotEventsScores(robotEventsFile);
+          Team vexDB = JsonReader.getVexDBScores(vexDBFile);
 
-          System.out.println("     Readng files...");
+          System.out.println("     Reading files...");
           Set<Team> teams = new TreeSet<>();
 
           while (robotEvents != null)
@@ -51,11 +51,14 @@ public class VexRankings
           }
 
           int i = 1;
+
           for (Team t : teams)
           {
                t.setRank(i);
-               System.out.println(t.rank() + ". " + t.plateNumber()
-                                                            + " " + t.score());
+               System.out.print(t.rank() + ". " + t.plateNumber());
+               for (int j = 0; j < 6 - t.plateNumber().length(); j++)
+                    System.out.print(" ");
+               System.out.println("\t" + t.score());
                i++;
           }
 
