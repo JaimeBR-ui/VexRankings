@@ -99,9 +99,15 @@ public class VexRankings
           for (Team t : teams)
           {
                t.setRank(i);
+
+               if (i < 10)
+                    System.out.print(" ");
+
                System.out.print(t.rank() + ". " + t.plateNumber());
+
                for (int j = 0; j < 6 - t.plateNumber().length(); j++)
                     System.out.print(" ");
+
                System.out.println("\t" + t.score());
                if (++i > numberOfRankings)
                     break;
