@@ -20,6 +20,9 @@ cmr:
 	@make clean
 	@make
 	@make run
+mr:
+	@make
+	@make run
 
 # Some things:
 # @ makes the file not print the command running into the cmd
