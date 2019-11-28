@@ -15,7 +15,7 @@ public class VexRankings
 {
      private static final String gradeLevel = "College";
      private static final String season = "Tower Takeover";
-     private static final int numberOfRankings = 15;
+     private static final int numberOfRankings = 20;
 
      private static String vexDBFile = "./data/vexdb_rankings.json";
      private static String robotEventsFile = "./data/robot_events_rankings.json";
@@ -32,8 +32,9 @@ public class VexRankings
           URLWritter.writeToFile(robotEventsURL, robotEventsFile);
 
           // Read json files and return head of linked list.
-          Team robotEvents = JsonReader.getRobotEventsScores(robotEventsFile);
-          Team vexDB = JsonReader.getVexDBScores(vexDBFile);
+          Team robotEvents = JsonReader.getRobotEventsScores(robotEventsFile,
+                                                            numberOfRankings);
+          Team vexDB = JsonReader.getVexDBScores(vexDBFile, numberOfRankings);
 
           System.out.println("     Reading files...");
           Set<Team> teams = new TreeSet<>();
@@ -50,17 +51,7 @@ public class VexRankings
                vexDB = vexDB.next;
           }
 
-          int i = 1;
-
-          for (Team t : teams)
-          {
-               t.setRank(i);
-               System.out.print(t.rank() + ". " + t.plateNumber());
-               for (int j = 0; j < 6 - t.plateNumber().length(); j++)
-                    System.out.print(" ");
-               System.out.println("\t" + t.score());
-               i++;
-          }
+          printRankings(teams);
 
           System.out.println("     [Complete]");
      }
@@ -99,5 +90,21 @@ public class VexRankings
                return null;
 
           return url;
+     }
+
+     protected static void printRankings(Set<Team> teams)
+     {
+          int i = 1;
+
+          for (Team t : teams)
+          {
+               t.setRank(i);
+               System.out.print(t.rank() + ". " + t.plateNumber());
+               for (int j = 0; j < 6 - t.plateNumber().length(); j++)
+                    System.out.print(" ");
+               System.out.println("\t" + t.score());
+               if (++i > numberOfRankings)
+                    break;
+          }
      }
 }

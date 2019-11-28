@@ -19,7 +19,7 @@ import org.json.simple.parser.ParseException;
 
 class JsonReader
 {
-     protected static Team getRobotEventsScores(String fileName)
+     protected static Team getRobotEventsScores(String fileName, int amount)
      {
           JSONParser parser = new JSONParser();
           Reader reader;
@@ -39,7 +39,7 @@ class JsonReader
           Team head = null;
           Team current = null;
 
-          for (int i = 0; i < array.size(); i++)
+          for (int i = 0; i < array.size() && i < amount; i++)
           {
                // Gets the team from the array.
                JSONObject jsonTeam = (JSONObject) array.get(i);
@@ -69,7 +69,7 @@ class JsonReader
           return head;
      }
 
-     protected static Team getVexDBScores(String fileName)
+     protected static Team getVexDBScores(String fileName, int amount)
      {
           JSONParser parser = new JSONParser();
           Reader reader;
@@ -92,7 +92,7 @@ class JsonReader
           // lets get the team array
           Team head = null, current = null;
 
-          for (int i = 0; i < size; i++)
+          for (int i = 0; i < size && i < amount; i++)
           {
                // Gets the team from the array.
                JSONObject jsonTeam = (JSONObject) array.get(i);
