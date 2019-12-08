@@ -27,7 +27,7 @@ public class VexRankings
           String vexdbURL = getVexdbURL(gradeLevel, season);
           String robotEventsURL = getRobotEventsURL(gradeLevel, season);
 
-          System.out.println("     Writing data to files...");
+          //System.out.println("     Writing data to files...");
           URLWritter.writeToFile(vexdbURL, vexDBFile);
           URLWritter.writeToFile(robotEventsURL, robotEventsFile);
 
@@ -35,7 +35,7 @@ public class VexRankings
           Team robotEvents = JsonReader.getRobotEventsScores(robotEventsFile);
           Team vexDB = JsonReader.getVexDBScores(vexDBFile);
 
-          System.out.println("     Reading files...");
+          //System.out.println("     Reading files...");
           Map<String, Team> teams = new TreeMap<>();
 
           while (robotEvents != null)
@@ -59,7 +59,7 @@ public class VexRankings
 
           printRankings(teams);
 
-          System.out.println("     [Complete]");
+          //System.out.println("     [Complete]");
      }
 
      public static String getRobotEventsURL(String gradeLevel, String season)
@@ -95,7 +95,7 @@ public class VexRankings
           else
                return null;
 
-          System.out.println(url);
+          //System.out.println(url);
           return url;
      }
 
