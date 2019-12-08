@@ -11,7 +11,9 @@ clean :
 	@echo "Cleaning project"
 	@-$Drm -rf rm *.class
 run:
+	@echo "============================================"
 	@echo "Starting up:"
+	@echo "============================================"
 	@java VexRankings
 all:
 	@make clean
