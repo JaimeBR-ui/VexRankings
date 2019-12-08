@@ -97,8 +97,8 @@ class JsonReader
                // Gets the team from the array.
                JSONObject jsonTeam = (JSONObject) array.get(i);
 
-               String teamName = "(name not found)";
                String plateNumber = (String) jsonTeam.get("team");
+               String teamName = getTeamName(plateNumber);
 
                long score = (long) jsonTeam.get("score");
 
@@ -116,5 +116,41 @@ class JsonReader
                }
           }
           return head;
+     }
+
+     protected static String getTeamName(String plateNumber)
+     {
+          String fileName = "./data/team_data.json";
+          String link = "https://api.vexdb.io/v1/get_teams?team=" + plateNumber;
+          URLWritter.writeToFile(link, fileName);
+
+          // Read JSON file.
+          JSONParser parser = new JSONParser();
+          Reader reader;
+          JSONArray array = null;
+          int size = 0;
+          try
+          {
+               // Lets get the array within the json file.
+               reader = new FileReader(fileName);
+               JSONObject container = (JSONObject) parser.parse(reader);
+               long length = (long) container.get("size");
+               size = (int) length;
+               array = (JSONArray) container.get("result");
+          }
+          catch (Exception e)
+          {
+               e.printStackTrace();
+          }
+
+          // lets get the team array
+          Team head = null, current = null;
+
+          // Gets the team from the array.
+          JSONObject jsonTeam = (JSONObject) array.get(0);
+
+          String name = (String) jsonTeam.get("team_name");
+
+          return name;
      }
 }
