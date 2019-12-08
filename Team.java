@@ -7,7 +7,9 @@
 // that can store the teams score, name, etc.
 // =============================================================================
 
-class Team implements Comparable
+import java.util.*;
+
+class Team implements Comparable<Team>
 {
      public Team next;
 
@@ -33,7 +35,7 @@ class Team implements Comparable
      {
           return this.score;
      }
-//     @Deprecated
+
      public int rank()
      {
           return this.rank;
@@ -52,17 +54,8 @@ class Team implements Comparable
 
      // Implementation.
      @Override
-     public int compareTo(Object o)
+     public int compareTo(Team t)
      {
-          if (!(o instanceof Team))
-               return 0;
-
-          else if (((Team) o).plateNumber().equals(this.plateNumber()))
-               return 0;
-
-          else if (((Team)o).score > this.score)
-               return 1;
-
-          return -1;
+          return this.plateNumber.compareTo(t.plateNumber);
      }
 }
