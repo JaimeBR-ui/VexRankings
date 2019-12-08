@@ -97,7 +97,7 @@ class JsonReader
                // Gets the team from the array.
                JSONObject jsonTeam = (JSONObject) array.get(i);
 
-               String teamName = "(Name Not found)";
+               String teamName = "(name not found)";
                String plateNumber = (String) jsonTeam.get("team");
 
                long score = (long) jsonTeam.get("score");
